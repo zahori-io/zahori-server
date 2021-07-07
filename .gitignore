@@ -1,0 +1,5 @@
+/database/postgres-data/*
+/evidences/*
+/selenoid/config/logs/*
+/selenoid/config/video/*
+*~
