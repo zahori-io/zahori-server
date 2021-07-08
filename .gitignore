@@ -2,4 +2,5 @@
 /evidences/*
 /selenoid/config/logs/*
 /selenoid/config/video/*
+/backend/*
 *~
