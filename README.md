@@ -1,1 +1,1 @@
-# zahori-srv
+# zahori-server
