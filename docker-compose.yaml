@@ -62,17 +62,6 @@ services:
      - eureka-server
      - selenoid-ui
 
-  chrome91:
-    image: "selenoid/vnc_chrome:91.0"
-  firefox90:
-    image: "selenoid/vnc_firefox:90.0"
-  safari14:
-    image: "browsers/safari:14.0"
-  edge91:
-    image: "browsers/edge:91.0"
-  opera77:
-    image: "selenoid/vnc_opera:77.0"
-
   selenoid:
     image: "aerokube/selenoid:1.10.4"
     network_mode: bridge
