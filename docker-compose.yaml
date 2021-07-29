@@ -62,19 +62,19 @@ services:
      - eureka-server
      - selenoid-ui
 
-  chrome86:
-    image: "selenoid/vnc_chrome:86.0"
-  firefox81:
-    image: "selenoid/vnc_firefox:81.0"
-  safari13:
-    image: "browsers/safari:13.0"
-  edge88:
-    image: "browsers/edge:88.0"
-  opera71:
-    image: "selenoid/vnc_opera:71.0"
+  chrome91:
+    image: "selenoid/vnc_chrome:91.0"
+  firefox90:
+    image: "selenoid/vnc_firefox:90.0"
+  safari14:
+    image: "browsers/safari:14.0"
+  edge91:
+    image: "browsers/edge:91.0"
+  opera77:
+    image: "selenoid/vnc_opera:77.0"
 
   selenoid:
-    image: "aerokube/selenoid"
+    image: "aerokube/selenoid:1.10.4"
     network_mode: bridge
     ports:
       - "${ZAHORI_SELENOID_PORT}:4444"
@@ -88,7 +88,7 @@ services:
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-limit", "5"]
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui"
+    image: "aerokube/selenoid-ui:1.10.3"
     ports:
       - "${ZAHORI_SELENOID_UI_INTERNAL_PORT}:8080"
     command: ["--selenoid-uri", "http://selenoid:${ZAHORI_SELENOID_PORT}", "--allowed-origin", "*"]
