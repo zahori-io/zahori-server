@@ -1,5 +1,5 @@
-selenoid/vnc_chrome:91.0
-selenoid/vnc_firefox:90.0
-browsers/safari:14.0
-browsers/edge:91.0
-selenoid/vnc_opera:77.0
+selenoid/vnc_chrome:97.0
+selenoid/vnc_firefox:96.0
+browsers/safari:15.0
+browsers/edge:97.0
+selenoid/vnc_opera:82.0
