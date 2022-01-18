@@ -4,3 +4,5 @@
 /selenoid/config/video/*
 /backend/*
 *~
+
+.idea/
