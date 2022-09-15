@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.13
+    image: zahoriaut/zahori-server:0.1.14
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
