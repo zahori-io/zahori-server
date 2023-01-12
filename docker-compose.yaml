@@ -2,13 +2,13 @@ version: '3'
 services:
 
   eureka-server:
-    image: zahoriaut/eureka-server:0.1.8
+    image: zahoriaut/eureka-server:0.1.8_CONTEXT
     ports: 
       - "${ZAHORI_EUREKA_PORT}:8761"
     network_mode: bridge
 
   database:
-    image: postgres:12.9-alpine
+    image: postgres:12.13-alpine
     restart: always
     ports:
       - "${ZAHORI_DB_PORT}:5432"
@@ -22,7 +22,7 @@ services:
      - zahori-database:/var/lib/postgresql/data
 
   flyway:
-    image: flyway/flyway:8.4.1
+    image: flyway/flyway:8.5.13-alpine
     command: -locations=filesystem:/flyway/sql -url=jdbc:postgresql://${ZAHORI_DB_HOST}:${ZAHORI_DB_PORT}/${ZAHORI_DB_NAME} -user=${ZAHORI_DB_ADMIN_USER} -password=${ZAHORI_DB_ADMIN_PASS} -placeholders.zahori_db_user=${ZAHORI_DB_USER} -placeholders.zahori_db_pass=${ZAHORI_DB_PASS} -baselineOnMigrate="false" -connectRetries=60 migrate
     network_mode: bridge
     links:
@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.14
+    image: zahoriaut/zahori-server:0.1.15
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
@@ -63,7 +63,7 @@ services:
      - selenoid-ui
 
   selenoid:
-    image: "aerokube/selenoid:1.10.7"
+    image: "aerokube/selenoid:1.10.9"
     network_mode: bridge
     ports:
       - "${ZAHORI_SELENOID_PORT}:4444"
@@ -77,7 +77,7 @@ services:
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-limit", "5"]
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui:1.10.4"
+    image: "aerokube/selenoid-ui:1.10.8"
     ports:
       - "${ZAHORI_SELENOID_UI_INTERNAL_PORT}:8080"
     command: ["--selenoid-uri", "http://selenoid:${ZAHORI_SELENOID_PORT}", "--allowed-origin", "*"]
