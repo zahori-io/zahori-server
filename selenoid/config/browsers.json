@@ -18,12 +18,12 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "browsers/edge:108.0",
+        "image": "browsers/edge:110.0",
         "port": "4444",
         "path": "/"
       },
-      "108.0": {
-        "image": "browsers/edge:108.0",
+      "110.0": {
+        "image": "browsers/edge:110.0",
         "port": "4444",
         "path": "/"
       }          
@@ -33,12 +33,12 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "selenoid/vnc_firefox:108.0",
+        "image": "selenoid/vnc_firefox:110.0",
         "port": "4444",
         "path": "/wd/hub"
       },
-      "108.0": {
-        "image": "selenoid/vnc_firefox:108.0",
+      "110.0": {
+        "image": "selenoid/vnc_firefox:110.0",
         "port": "4444",
         "path": "/wd/hub"
       }
@@ -48,11 +48,11 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "selenoid/vnc_chrome:108.0",
+        "image": "selenoid/vnc_chrome:110.0",
         "port": "4444"
       },
-      "108.0": {
-        "image": "selenoid/vnc_chrome:108.0",
+      "110.0": {
+        "image": "selenoid/vnc_chrome:110.0",
         "port": "4444"
       }
     }

@@ -1,5 +1,6 @@
 /database/postgres-data/*
 /evidences/*
+/logs/*
 /selenoid/config/logs/*
 /selenoid/config/video/*
 /backend/*
