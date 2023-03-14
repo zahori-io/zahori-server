@@ -89,22 +89,20 @@ services:
       - selenoid
 
 #  zahori-process:
-#    image: zahoriaut/zahori-process:0.1.10
+#    image: zahoriaut/zahori-process:0.1.11
 #    network_mode: bridge
 #    links:
 #      - zahori-server
 #      - consul
 #      - selenoid
 #    environment:
-##     - ZAHORI_SERVER_HOST=http://zahori-server:9090/zahori
+#     - ZAHORI_SERVER_HOST=http://zahori-server:9090/zahori
 #     - ZAHORI_SELENOID_HOST=${ZAHORI_SELENOID_HOST}
 #     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
 #     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
 #    depends_on:
 #     - zahori-server
 #     - consul
-#    deploy:
-#     replicas: 2
 
 volumes:
   zahori-database:
