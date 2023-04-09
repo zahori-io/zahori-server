@@ -14,12 +14,11 @@ services:
       - "${ZAHORI_DB_PORT}:5432"
     network_mode: bridge
     environment:
-     - POSTGRES_DB=${ZAHORI_DB_NAME}
-     - POSTGRES_USER=${ZAHORI_DB_ADMIN_USER}
-     - POSTGRES_PASSWORD=${ZAHORI_DB_ADMIN_PASS}
+      - POSTGRES_DB=${ZAHORI_DB_NAME}
+      - POSTGRES_USER=${ZAHORI_DB_ADMIN_USER}
+      - POSTGRES_PASSWORD=${ZAHORI_DB_ADMIN_PASS}
     volumes:
-#     - ./database/postgres-data:/var/lib/postgresql/data
-     - zahori-database:/var/lib/postgresql/data
+      - ${VOLUME_DATABASE}:/var/lib/postgresql/data
 
   flyway:
     image: flyway/flyway:8.5.13-alpine
@@ -42,22 +41,22 @@ services:
       - consul
       - selenoid-ui
     environment:
-     - ZAHORI_SERVER_PORT=${ZAHORI_SERVER_PORT}
-     - ZAHORI_DB_HOST=${ZAHORI_DB_HOST}
-     - ZAHORI_DB_PORT=${ZAHORI_DB_PORT}
-     - ZAHORI_DB_NAME=${ZAHORI_DB_NAME}
-     - ZAHORI_DB_SCHEMA=${ZAHORI_DB_SCHEMA}
-     - ZAHORI_DB_USER=${ZAHORI_DB_USER}
-     - ZAHORI_DB_PASS=${ZAHORI_DB_PASS}
-     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
-     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
-     - ZAHORI_SELENOID_UI_INTERNAL_HOST=${ZAHORI_SELENOID_UI_INTERNAL_HOST}
-     - ZAHORI_SELENOID_UI_INTERNAL_PORT=${ZAHORI_SELENOID_UI_INTERNAL_PORT}
-     - ZAHORI_SELENOID_UI_EXTERNAL_HOST=${ZAHORI_SELENOID_UI_EXTERNAL_HOST}
-     - ZAHORI_SELENOID_UI_EXTERNAL_PORT=${ZAHORI_SELENOID_UI_EXTERNAL_PORT}
+      - ZAHORI_SERVER_PORT=${ZAHORI_SERVER_PORT}
+      - ZAHORI_DB_HOST=${ZAHORI_DB_HOST}
+      - ZAHORI_DB_PORT=${ZAHORI_DB_PORT}
+      - ZAHORI_DB_NAME=${ZAHORI_DB_NAME}
+      - ZAHORI_DB_SCHEMA=${ZAHORI_DB_SCHEMA}
+      - ZAHORI_DB_USER=${ZAHORI_DB_USER}
+      - ZAHORI_DB_PASS=${ZAHORI_DB_PASS}
+      - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
+      - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
+      - ZAHORI_SELENOID_UI_INTERNAL_HOST=${ZAHORI_SELENOID_UI_INTERNAL_HOST}
+      - ZAHORI_SELENOID_UI_INTERNAL_PORT=${ZAHORI_SELENOID_UI_INTERNAL_PORT}
+      - ZAHORI_SELENOID_UI_EXTERNAL_HOST=${ZAHORI_SELENOID_UI_EXTERNAL_HOST}
+      - ZAHORI_SELENOID_UI_EXTERNAL_PORT=${ZAHORI_SELENOID_UI_EXTERNAL_PORT}
     volumes:
-     - ./evidences:/usr/app/evidences
-     - ./logs:/usr/app/logs
+     - ${VOLUME_EVIDENCES}:/usr/app/evidences
+     - ${VOLUME_LOGS}:/usr/app/logs
     depends_on:
      - flyway
      - consul
@@ -83,27 +82,31 @@ services:
       - "${ZAHORI_SELENOID_UI_INTERNAL_PORT}:8080"
     command: ["--selenoid-uri", "http://selenoid:${ZAHORI_SELENOID_PORT}", "--allowed-origin", "*"]
     depends_on:
-     - selenoid
+      - selenoid
     network_mode: bridge
     links:
       - selenoid
 
-#  zahori-process:
-#    image: zahoriaut/zahori-process:0.1.11
-#    network_mode: bridge
-#    links:
-#      - zahori-server
-#      - consul
-#      - selenoid
-#    environment:
-#     - ZAHORI_SERVER_HOST=http://zahori-server:9090/zahori
-#     - ZAHORI_SELENOID_HOST=${ZAHORI_SELENOID_HOST}
-#     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
-#     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
-#    depends_on:
-#     - zahori-server
-#     - consul
+  zahori-process:
+    image: zahoriaut/zahori-process:0.1.11
+    network_mode: bridge
+    links:
+      - zahori-server
+      - consul
+      - selenoid
+    environment:
+     - ZAHORI_SERVER_HOST=http://zahori-server:${ZAHORI_SERVER_PORT}/zahori
+     - ZAHORI_SELENOID_HOST=${ZAHORI_SELENOID_HOST}
+     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
+     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
+    depends_on:
+     - zahori-server
+     - consul
 
 volumes:
   zahori-database:
+    external: true
+  zahori-evidences:
+    external: true
+  zahori-logs:
     external: true
