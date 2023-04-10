@@ -8,25 +8,25 @@ set +o allexport
 echo Creating database volume
 docker volume create --name zahori-database
 
-if [ $RESTORE_DATABASE_ENABLED == "1" ]; then
+if [ "$RESTORE_DATABASE_ENABLED" == "1" ]; then
   echo "Restoring database..."
   docker run --rm \
-    --volume zahori-database:/tmp/restored \
-    --volume $RESTORE_DIRECTORY:/tmp/backup \
+    --volume "zahori-database:/tmp/restored" \
+    --volume "$RESTORE_DIRECTORY:/tmp/backup" \
     ubuntu \
-    tar xvf /tmp/backup/$RESTORE_DATABASE_FILE.tar -C /tmp/restored --strip 1
+    tar xvf "/tmp/backup/$RESTORE_DATABASE_FILE" -C "/tmp/restored" --strip 1
 fi
 
 echo Creating evidences volume
 docker volume create --name zahori-evidences
 
-if [ $RESTORE_EVIDENCES_ENABLED == "1" ]; then
+if [ "$RESTORE_EVIDENCES_ENABLED" == "1" ]; then
   echo "Restoring evidences..."
   docker run --rm \
-    --volume zahori-evidences:/tmp/restored \
-    --volume $RESTORE_DIRECTORY:/tmp/backup \
+    --volume "zahori-evidences:/tmp/restored" \
+    --volume "$RESTORE_DIRECTORY:/tmp/backup" \
     ubuntu \
-    tar xvf /tmp/backup/$RESTORE_EVIDENCES_FILE.tar -C /tmp/restored --strip 1
+    tar xvf "/tmp/backup/$RESTORE_EVIDENCES_FILE" -C "/tmp/restored" --strip 1
 fi
 
 echo Creating logs volume
