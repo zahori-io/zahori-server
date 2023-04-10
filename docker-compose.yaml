@@ -104,6 +104,24 @@ services:
 #     - zahori-server
 #     - consul
 
+  zahori-ldap:
+    image: "bitnami/openldap:2"
+    ports:
+      - "1389:1389"
+      - "1636:1636"
+    environment:
+      - LDAP_ADMIN_USERNAME=${LDAP_ADMIN_USERNAME}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_USERS=${LDAP_USERS}
+      - LDAP_PASSWORDS=${LDAP_PASSWORDS}
+      - LDAP_ROOT=${LDAP_ROOT}
+#      - LDAP_CUSTOM_LDIF_DIR=
+    volumes:
+      - "${VOLUME_OPENLDAP}:/bitnami/openldap"
+
+
 volumes:
   zahori-database:
+    external: true
+  zahori-openldap:
     external: true
