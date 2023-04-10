@@ -33,7 +33,7 @@ echo Creating logs volume
 docker volume create --name zahori-logs
 
 echo Download browser images
-while read in
+while read -r in
 do
   echo "docker pull $in"
   docker pull "$in"

@@ -19,8 +19,8 @@ fi
 if [ "$BACKUP_EVIDENCES_ENABLED" == "1" ]; then
   echo "Launching evidences backup..."
   docker run --rm \
-    --volume zahori-evidences:/tmp/data \
-    --volume $BACKUP_DIRECTORY:/tmp/backup \
+    --volume "zahori-evidences:/tmp/data" \
+    --volume "$BACKUP_DIRECTORY:/tmp/backup" \
     ubuntu \
     tar cvf "/tmp/backup/$BACKUP_EVIDENCES_FILE" "/tmp/data"
 fi
