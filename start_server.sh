@@ -2,6 +2,7 @@
 
 echo Set environment variables defined in file env-vars.txt
 set -o allexport
+# shellcheck source=env-vars.txt
 source env-vars.txt
 set +o allexport
 
