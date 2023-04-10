@@ -5,6 +5,9 @@ set -o allexport
 source env-vars.txt
 set +o allexport
 
+echo Create docker volume for OpenLDAP
+docker volume create --name zahori-openldap --driver local
+
 echo Create docker volume for PostgreSql
 docker volume create --name zahori-database --driver local
 
