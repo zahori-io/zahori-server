@@ -2,13 +2,13 @@ version: '3'
 services:
 
   consul:
-    image: consul:1.14.4
+    image: consul:1.15.3
     ports:
       - "${ZAHORI_CONSUL_PORT}:8500"
     network_mode: bridge
 
   database:
-    image: postgres:12.14-alpine
+    image: postgres:12.15-alpine
     restart: always
     ports:
       - "${ZAHORI_DB_PORT}:5432"
@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.16
+    image: zahoriaut/zahori-server:0.1.17
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
@@ -58,13 +58,14 @@ services:
     volumes:
      - ./evidences:/usr/app/evidences
      - ./logs:/usr/app/logs
+#     - ./timezone:/etc/timezone:ro
     depends_on:
      - flyway
      - consul
      - selenoid-ui
 
   selenoid:
-    image: "aerokube/selenoid:1.10.10"
+    image: "aerokube/selenoid:1.10.12"
     network_mode: bridge
     ports:
       - "${ZAHORI_SELENOID_PORT}:4444"
@@ -78,7 +79,7 @@ services:
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-limit", "5"]
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui:1.10.9"
+    image: "aerokube/selenoid-ui:1.10.10"
     ports:
       - "${ZAHORI_SELENOID_UI_INTERNAL_PORT}:8080"
     command: ["--selenoid-uri", "http://selenoid:${ZAHORI_SELENOID_PORT}", "--allowed-origin", "*"]
@@ -87,6 +88,21 @@ services:
     network_mode: bridge
     links:
       - selenoid
+
+  zahori-scheduler:
+    image: zahoriaut/zahori-scheduler:1.0.0
+    network_mode: bridge
+    links:
+      - zahori-server
+      - consul
+    environment:
+     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
+     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
+    depends_on:
+     - zahori-server
+     - consul
+#    volumes:
+#     - ./timezone:/etc/timezone:ro
 
 #  zahori-process:
 #    image: zahoriaut/zahori-process:0.1.11
@@ -103,6 +119,8 @@ services:
 #    depends_on:
 #     - zahori-server
 #     - consul
+#    volumes:
+#     - ./timezone:/etc/timezone:ro
 
 volumes:
   zahori-database:
