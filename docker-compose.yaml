@@ -58,7 +58,7 @@ services:
     volumes:
      - ./evidences:/usr/app/evidences
      - ./logs:/usr/app/logs
-#     - ./timezone:/etc/timezone:ro
+     - ./timezone:/etc/timezone:ro
     depends_on:
      - flyway
      - consul
@@ -101,8 +101,8 @@ services:
     depends_on:
      - zahori-server
      - consul
-#    volumes:
-#     - ./timezone:/etc/timezone:ro
+    volumes:
+     - ./timezone:/etc/timezone:ro
 
 #  zahori-process:
 #    image: zahoriaut/zahori-process:0.1.11
