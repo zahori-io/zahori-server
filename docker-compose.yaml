@@ -2,13 +2,13 @@ version: '3'
 services:
 
   consul:
-    image: consul:1.15.3
+    image: consul:1.15.4
     ports:
       - "${ZAHORI_CONSUL_PORT}:8500"
     network_mode: bridge
 
   database:
-    image: postgres:12.15-alpine
+    image: postgres:12.16-alpine
     restart: always
     ports:
       - "${ZAHORI_DB_PORT}:5432"
@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.17
+    image: zahoriaut/zahori-server:0.1.18
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
@@ -55,9 +55,16 @@ services:
      - ZAHORI_SELENOID_UI_INTERNAL_PORT=${ZAHORI_SELENOID_UI_INTERNAL_PORT}
      - ZAHORI_SELENOID_UI_EXTERNAL_HOST=${ZAHORI_SELENOID_UI_EXTERNAL_HOST}
      - ZAHORI_SELENOID_UI_EXTERNAL_PORT=${ZAHORI_SELENOID_UI_EXTERNAL_PORT}
+     - ZAHORI_EMAIL_ENABLE=false
+#     - ZAHORI_EMAIL_HOST=smtp.gmail.com
+#     - ZAHORI_EMAIL_HOST=smtp-mail.outlook.com
+#     - ZAHORI_EMAIL_PORT=587
+#     - ZAHORI_EMAIL_USER=${ZAHORI_EMAIL_USER}
+#     - ZAHORI_EMAIL_PASS=${ZAHORI_EMAIL_PASS}
+#     - ZAHORI_EMAIL_STARTTLS=true
     volumes:
      - ./evidences:/usr/app/evidences
-     - ./logs:/usr/app/logs
+     - ./logs/server:/usr/app/logs
      - ./timezone:/etc/timezone:ro
     depends_on:
      - flyway
@@ -105,22 +112,22 @@ services:
      - ./timezone:/etc/timezone:ro
 
 #  zahori-process:
-#    image: zahoriaut/zahori-process:0.1.12
+#    image: zahoriaut/zahori-process:0.1.13
 #    network_mode: bridge
 #    links:
 #      - zahori-server
 #      - consul
 #      - selenoid
 #    environment:
-#     - ZAHORI_SERVER_HOST=http://zahori-server:9090/zahori
-#     - ZAHORI_SELENOID_HOST=${ZAHORI_SELENOID_HOST}
-#     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
-#     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
+#      - ZAHORI_SERVER_HOST=http://zahori-server:9090/zahori
+#      - ZAHORI_SELENOID_HOST=${ZAHORI_SELENOID_HOST}
+#      - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
+#      - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
 #    depends_on:
-#     - zahori-server
-#     - consul
+#      - zahori-server
+#      - consul
 #    volumes:
-#     - ./timezone:/etc/timezone:ro
+#      - ./timezone:/etc/timezone:ro
 
 volumes:
   zahori-database:
