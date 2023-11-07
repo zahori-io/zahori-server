@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.18
+    image: zahoriaut/zahori-server:0.1.19
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
@@ -112,7 +112,7 @@ services:
      - ./timezone:/etc/timezone:ro
 
 #  zahori-process:
-#    image: zahoriaut/zahori-process:0.1.13
+#    image: zahoriaut/zahori-process:0.1.14
 #    network_mode: bridge
 #    links:
 #      - zahori-server
