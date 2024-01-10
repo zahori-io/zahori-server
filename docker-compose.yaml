@@ -8,7 +8,7 @@ services:
     network_mode: bridge
 
   database:
-    image: postgres:12.16-alpine
+    image: postgres:12.17-alpine
     restart: always
     ports:
       - "${ZAHORI_DB_PORT}:5432"
@@ -33,7 +33,7 @@ services:
       - database
 
   zahori-server:
-    image: zahoriaut/zahori-server:0.1.19
+    image: zahoriaut/zahori-server:0.1.20
     ports:
       - "${ZAHORI_SERVER_PORT}:${ZAHORI_SERVER_PORT}"
     network_mode: bridge
@@ -62,6 +62,7 @@ services:
 #     - ZAHORI_EMAIL_USER=${ZAHORI_EMAIL_USER}
 #     - ZAHORI_EMAIL_PASS=${ZAHORI_EMAIL_PASS}
 #     - ZAHORI_EMAIL_STARTTLS=true
+##     - ZAHORI_CIPHER_SECRET=
     volumes:
      - ./evidences:/usr/app/evidences
      - ./logs/server:/usr/app/logs
@@ -86,7 +87,7 @@ services:
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-limit", "5"]
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui:1.10.10"
+    image: "aerokube/selenoid-ui:1.10.11"
     ports:
       - "${ZAHORI_SELENOID_UI_INTERNAL_PORT}:8080"
     command: ["--selenoid-uri", "http://selenoid:${ZAHORI_SELENOID_PORT}", "--allowed-origin", "*"]
@@ -103,16 +104,16 @@ services:
       - zahori-server
       - consul
     environment:
-     - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
-     - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
+      - ZAHORI_CONSUL_HOST=${ZAHORI_CONSUL_HOST}
+      - ZAHORI_CONSUL_PORT=${ZAHORI_CONSUL_PORT}
     depends_on:
-     - zahori-server
-     - consul
+      - zahori-server
+      - consul
     volumes:
-     - ./timezone:/etc/timezone:ro
+      - ./timezone:/etc/timezone:ro
 
 #  zahori-process:
-#    image: zahoriaut/zahori-process:0.1.14
+#    image: zahoriaut/zahori-process:0.1.15
 #    network_mode: bridge
 #    links:
 #      - zahori-server
