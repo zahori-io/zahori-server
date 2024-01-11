@@ -13,3 +13,7 @@ UPDATE public.browsers SET default_version = '120.0' WHERE browser_name = 'edge'
 UPDATE public.browsers SET default_version = '120.0' WHERE browser_name = 'firefox';
 UPDATE public.browsers SET default_version = '105.0' WHERE browser_name = 'opera';
 UPDATE public.browsers SET default_version = '15.0' WHERE browser_name = 'safari';
+
+---------------- Fix notifications for scheduled executions ----------------
+UPDATE public.notification_events SET name='execution.scheduler.success' WHERE name='execution.scheduled.success';
+UPDATE public.notification_events SET name='execution.scheduler.failure' WHERE name='execution.scheduled.failure';
