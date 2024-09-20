@@ -1,7 +1,7 @@
 @echo off
 
-echo Set environment variables defined in file env-vars.txt
-for /F %%x in (env-vars.txt) do (
+echo Set environment variables defined in file vars.env
+for /F %%x in (vars.env) do (
    set %%x
 )
 

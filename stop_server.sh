@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Set environment variables defined in file env-vars.txt
+# Set environment variables defined in file vars.env
 set -o allexport
-source env-vars.txt
+source vars.env
 set +o allexport
 
 # Stop docker-compose

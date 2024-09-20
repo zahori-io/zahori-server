@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo Set environment variables defined in file env-vars.txt
+echo Set environment variables defined in file vars.env
 set -o allexport
-source env-vars.txt
+source vars.env
 set +o allexport
 
 echo Create docker volume for PostgreSql
