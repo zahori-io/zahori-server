@@ -73,7 +73,7 @@ services:
      - selenoid-ui
 
   selenoid:
-    image: "aerokube/selenoid:1.10.12"
+    image: "aerokube/selenoid:1.11.3"
     network_mode: bridge
     ports:
       - "${ZAHORI_SELENOID_PORT}:4444"
