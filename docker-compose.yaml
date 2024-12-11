@@ -8,7 +8,7 @@ services:
     network_mode: bridge
 
   database:
-    image: postgres:12.17-alpine
+    image: postgres:12.22-alpine
     restart: always
     ports:
       - "${ZAHORI_DB_PORT}:5432"
