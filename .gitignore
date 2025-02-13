@@ -1,4 +1,5 @@
 /database/postgres-data/*
+/backups/*
 /evidences/*
 /logs/*
 /selenoid/config/logs/*
